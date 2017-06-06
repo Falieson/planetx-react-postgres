@@ -41,7 +41,7 @@ function renderPageToString(element, state) {
 
 <head>
   <meta charset="utf-8">
-  <title>Found Universal Redux Example</title>
+  <title>Ultimate React 2017 - Counter Example</title>
 </head>
 
 <body>

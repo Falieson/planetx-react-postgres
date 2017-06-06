@@ -3,7 +3,7 @@ import createMatchEnhancer from 'found/lib/createMatchEnhancer';
 import foundReducer from 'found/lib/foundReducer';
 import Matcher from 'found/lib/Matcher';
 import { combineReducers, compose, createStore } from 'redux';
-
+import { composeWithDevTools } from 'redux-devtools-extension';
 import routeConfig from './routeConfig';
 
 export default function genStore(historyProtocol, preloadedState) {
@@ -12,14 +12,16 @@ export default function genStore(historyProtocol, preloadedState) {
       found: foundReducer,
     }),
     preloadedState,
-    compose(
-      createHistoryEnhancer({
-        protocol: historyProtocol,
-        middlewares: [queryMiddleware],
-      }),
-      createMatchEnhancer(
-        new Matcher(routeConfig),
+    composeWithDevTools(
+      compose(
+        createHistoryEnhancer({
+          protocol: historyProtocol,
+          middlewares: [queryMiddleware],
+        }),
+        createMatchEnhancer(
+          new Matcher(routeConfig),
+        ),
       ),
-    ),
+    )
   );
 }
