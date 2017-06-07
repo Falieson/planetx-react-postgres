@@ -2,7 +2,8 @@ import React from 'react';
 import Redirect from 'found/lib/Redirect';
 
 import App from './App';
-import {Home, About} from './pages/'
+import { Home, About } from './pages/'
+import Counter from './components/Counter.js'
 
 export default [
   {
@@ -15,6 +16,10 @@ export default [
       {
         path: 'about',
         Component: () => <About />,
+      },
+      {
+        path: 'counter',
+        Component: () => <Counter />,
       },
     ],
   },

@@ -38,6 +38,9 @@ export default function Navigation() {
         <LinkItem to="/about">
           About
         </LinkItem>
+        <LinkItem to="/counter">
+          Counter
+        </LinkItem>
       </ul>
     </nav>
   )
