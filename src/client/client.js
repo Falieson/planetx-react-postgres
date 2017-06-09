@@ -6,8 +6,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import genStore from './genStore';
-import render from './render';
+import genStore from '../redux/genStore';
+import render from '../universal/SSR';
 
 // eslint-disable-next-line no-underscore-dangle
 const store = genStore(new BrowserProtocol(), window.__PRELOADED_STATE__);

@@ -5,8 +5,8 @@ import Matcher from 'found/lib/Matcher';
 import { combineReducers, compose, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import ReduxThunk from 'redux-thunk'
-import routeConfig from './routeConfig';
-import { PX_COUNTERS_UI} from './components/Counter'
+import RouterConfig from '../universal/Router';
+import { PX_COUNTERS_UI} from '../components/Counter'
 
 export default function genStore(historyProtocol, preloadedState) {
   return createStore(
@@ -25,7 +25,7 @@ export default function genStore(historyProtocol, preloadedState) {
           ],
         }),
         createMatchEnhancer(
-          new Matcher(routeConfig),
+          new Matcher(RouterConfig),
         ),
       ),
     )

@@ -9,8 +9,8 @@ import serialize from 'serialize-javascript';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 
-import genStore from './genStore';
-import render from './render';
+import genStore from '../redux/genStore';
+import render from '../universal/SSR';
 
 const PORT = 3000;
 const app = express();
@@ -18,7 +18,7 @@ const app = express();
 const webpackConfig = {
   entry: [
     'babel-polyfill',
-    './src/client',
+    './src/client/client',
   ],
 
   output: {
