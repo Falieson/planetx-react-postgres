@@ -3,14 +3,13 @@ import { Actions as FarceActions, ServerProtocol } from 'farce';
 import { getStoreRenderArgs, resolver, RedirectException } from 'found';
 import { RouterProvider } from 'found/lib/server';
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
-import serialize from 'serialize-javascript';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 
 import genStore from '../redux/genStore';
 import render from '../universal/SSR';
+import htmlRoot from './htmlRoot';
 
 const PORT = 3000;
 const app = express();
@@ -33,28 +32,6 @@ const webpackConfig = {
     ],
   },
 };
-
-function renderPageToString(element, state) {
-  return `
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <title>Ultimate React 2017 - Counter Example</title>
-</head>
-
-<body>
-  <div id="root">${ReactDOMServer.renderToString(element)}</div>
-  <script>
-    window.__PRELOADED_STATE__ = ${serialize(state, { isJSON: true })};
-  </script>
-  <script src="/static/bundle.js"></script>
-</body>
-
-</html>
-  `;
-}
 
 app.use(webpackMiddleware(webpack(webpackConfig), {
   publicPath: webpackConfig.output.publicPath,
@@ -84,7 +61,7 @@ app.use(async (req, res) => {
 
   res
     .status(renderArgs.error ? renderArgs.error.status : 200)
-    .send(renderPageToString(
+    .send(htmlRoot(
       <Provider store={store}>
         <RouterProvider router={renderArgs.router}>
           {render(renderArgs)}
