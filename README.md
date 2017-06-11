@@ -1,15 +1,57 @@
-# Found Universal Redux Example
+Ultimate React Boilerplate 2017 | PlanetX
+======
 
-This example uses the same route configuration as the [basic JSX
-example](../basic-jsx), but uses server-side rendering for the initial page
-load and a custom redux store. The redux store is initially populated on the
-server and then the client rehydrates itself with the server's state.
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+---
+
+Found Universal Redux Example w/ Postgres/Knex
+------
+<!-- meta-description -->
+
+---
+
+## Next
+
+### New Counters feature: Postgres CRUD
+- countersSqlApp becomes available at new route '/counters-postgres'
+- countersSqlApp uses redux to optimistically CRUD the database
+- countersSqlApp can CRUD the database
+
+## History
+
+### Redux Thunk Counter
+- countersApp becomes available at new route '/counters'
+- countersApp attaches its store to the redux-store
+
+### Started w/ Found example for universal-redux
+server-side rendering for the initial page load and a custom redux store
+
+- redux store is initially populated on the server
+- then the client rehydrates itself with the server's state.
+
+
+## Docs
+```
+  docs/psql-setup.md - install pg & redis
+```
+
 
 ## Usage
 
 ```
 $ npm i
-$ npm start
+$ npm run db:setup    # yarn db:setup
+$ npm run build       # yarn build
+$ npm start           # yarn start
 ```
 
 Then open [http://localhost:3000/](http://localhost:3000/) in your browser.
+
+
+## Development
+
+### Commit
+
+```
+$ npm run commit      # yarn commit
+```
