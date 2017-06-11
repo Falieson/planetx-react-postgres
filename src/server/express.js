@@ -1,19 +1,29 @@
-import express from 'express';
-import { Actions as FarceActions, ServerProtocol } from 'farce';
-import { getStoreRenderArgs, resolver, RedirectException } from 'found';
-import { RouterProvider } from 'found/lib/server';
-import React from 'react';
-import { Provider } from 'react-redux';
+// WEBPACK
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
+
+// EXPRESS
+import express from 'express';
+import bodyParser from 'body-parser'
+
+// FOUND
+import { RouterProvider } from 'found/lib/server';
+import { Actions as FarceActions, ServerProtocol } from 'farce';
+import { getStoreRenderArgs, resolver, RedirectException } from 'found';
+
+// REACT
+import React from 'react';
+import { Provider } from 'react-redux';
 
 import genStore from '../redux/genStore';
 import render from '../universal/SSR';
 import htmlRoot from './htmlRoot';
 
+// EXPRESS: START
 const PORT = 3000;
 const app = express();
 
+// WEBPACK: CONFIG
 const webpackConfig = {
   entry: [
     'babel-polyfill',
@@ -38,6 +48,16 @@ app.use(webpackMiddleware(webpack(webpackConfig), {
   stats: { colors: true },
 }));
 
+// BODYPARSER: CONFIG
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next()
+})
+
+// REACT: CONFIG
 app.use(async (req, res) => {
   const store = genStore(new ServerProtocol(req.url));
   store.dispatch(FarceActions.init());
