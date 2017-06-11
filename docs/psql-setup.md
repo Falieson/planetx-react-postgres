@@ -15,7 +15,18 @@ $ createdb
 $ npm run db:setup # yarn db:setup
 
 
+## POSTGRES: COMMANDS
+### POSTGRES: SERVICE COMMANDS
+- install service: brew cask install postgresql
+- start service: brew services start postgresql
+- restart the service: `brew services restart postgresql`
+
+### POSTGRES: SERVER COMMANDS
+- create a user: `createuser -P <username>`
+- create a database: `createdb <dbname>`
+
 # REDIS setup
+```
 $ brew cask install redis
 $ brew services start redis
-
+```

@@ -41,7 +41,6 @@ server-side rendering for the initial page load and a custom redux store
 ```
 $ npm i
 $ npm run db:setup    # yarn db:setup
-$ npm run build       # yarn build
 $ npm start           # yarn start
 ```
 
@@ -49,9 +48,30 @@ Then open [http://localhost:3000/](http://localhost:3000/) in your browser.
 
 
 ## Development
+Start by reviewing the documentation in /docs/ (which will be moved to the github wiki)
 
-### Commit
 
+### Create a Commit
+This project uses commitizen and gitflow, for more about contributing checkout the wiki page!
 ```
 $ npm run commit      # yarn commit
+```
+
+### Setup
+**Either run `db:setupComplete` or each of the commands below**
+
+Create the database in the postgres server
+
+```
+$ npm run db:setup    # yarn db:setup
+```
+
+Sync the datbase to the latest migration
+```
+$ npm run db:latest    # yarn db:latest
+```
+
+Seed the database
+```
+$ npm run db:seed    # yarn db:seed
 ```

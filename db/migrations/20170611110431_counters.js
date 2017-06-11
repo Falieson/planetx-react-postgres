@@ -1,7 +1,7 @@
 // id - text
 // name - text
-// value - integer
-// createdAt - datetime
+// value* - integer (required)
+// updatedAt* - datetime (required)
 
 
 exports.up = function(db, Promise) {
