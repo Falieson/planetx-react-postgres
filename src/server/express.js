@@ -50,6 +50,7 @@ app.use(webpackMiddleware(webpack(webpackConfig), {
 }));
 
 
+// EXPRESS: CONSOLE LOGGER
 app.use(morgan('dev'))
 
 // BODYPARSER: CONFIG
