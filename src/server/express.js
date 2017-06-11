@@ -5,6 +5,7 @@ import webpackMiddleware from 'webpack-dev-middleware';
 // EXPRESS
 import express from 'express';
 import bodyParser from 'body-parser'
+import morgan from 'morgan'
 
 // FOUND
 import { RouterProvider } from 'found/lib/server';
@@ -47,6 +48,9 @@ app.use(webpackMiddleware(webpack(webpackConfig), {
   publicPath: webpackConfig.output.publicPath,
   stats: { colors: true },
 }));
+
+
+app.use(morgan('dev'))
 
 // BODYPARSER: CONFIG
 app.use(bodyParser.json())
@@ -91,6 +95,7 @@ app.use(async (req, res) => {
     ));
 });
 
+// EXPRESS: LAUNCH
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`); // eslint-disable-line no-console
 });
