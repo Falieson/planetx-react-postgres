@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 
 import { Header } from '../../components'
 
-export default function Home() {
+export default function CounterPostgres() {
   return (
     <div>
       <Header />
       <p>
-        To get started, edit <code>src/pages/Home/Home.js</code> and save to reload.
-        </p>
+        CounterPostgres doesn't exist yet
+      </p>
     </div>
   );
 }

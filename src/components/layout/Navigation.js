@@ -32,14 +32,17 @@ export default function Navigation() {
   return (
     <nav style={style.container}>
       <ul>
+        <LinkItem to="/counter-redux-thunk">
+          Redux Counter
+        </LinkItem>
+        <LinkItem to="/counter-postgres-redux">
+          Postgres Counter
+        </LinkItem>
         <LinkItem to="/">
           Home
         </LinkItem>
         <LinkItem to="/about">
           About
-        </LinkItem>
-        <LinkItem to="/counter">
-          Counter
         </LinkItem>
       </ul>
     </nav>

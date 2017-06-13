@@ -6,7 +6,7 @@ import { combineReducers, compose, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import ReduxThunk from 'redux-thunk'
 import RouterConfig from '../universal/Router';
-import { PX_COUNTERS_UI} from '../components/Counter'
+import { PX_COUNTERS_UI} from '../components/CounterRedux'
 
 export default function genStore(historyProtocol, preloadedState) {
   return createStore(

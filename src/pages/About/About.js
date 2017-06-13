@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 
-import {
-  Navigation
-} from '../../components'
+import { Header } from '../../components'
 
 class About extends Component {
   render() {
     return (
       <div>
-        <div>
-          <h2>About Page</h2>
-          <Navigation />
-        </div>
+        <Header />
         <p>
           To get started, edit <code>src/pages/About/About.js</code> and save to reload.
         </p>

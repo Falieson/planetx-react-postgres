@@ -2,7 +2,12 @@ import React from 'react';
 import Redirect from 'found/lib/Redirect';
 
 import App from '../App';
-import { Home, About, Counter } from '../pages/'
+import {
+  Home,
+  About,
+  CounterRedux,
+  CounterPostgres
+} from '../pages/'
 
 export default [
   {
@@ -17,8 +22,12 @@ export default [
         Component: () => <About />,
       },
       {
-        path: 'counter',
-        Component: () => <Counter />,
+        path: 'counter-redux-thunk',
+        Component: () => <CounterRedux />,
+      },
+      {
+        path: 'counter-postgres-redux',
+        Component: () => <CounterPostgres />,
       },
     ],
   },
