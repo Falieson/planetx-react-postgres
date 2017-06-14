@@ -8,6 +8,7 @@ import {
   CounterRedux,
   CounterPostgres
 } from '../pages/'
+import {Actions as CounterActions} from '../components/CounterPostgres'
 
 export default [
   {
@@ -28,6 +29,9 @@ export default [
       {
         path: 'counter-postgres-redux',
         Component: () => <CounterPostgres />,
+        getData: ({context}) => (
+          context.store.dispatch(CounterActions.fetch())
+        )
       },
     ],
   },

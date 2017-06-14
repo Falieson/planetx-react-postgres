@@ -2,11 +2,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
-import typeValidator from '../redux/typeValidator'  // this creates a proxy for actionTypes
+import postgres from '../server/postgres'
 // import makeReducer from '../redux/makeReducer' // this adds the reducer to the the store
 import crypto from 'crypto'
 const generateId = () => crypto.randomBytes(16).toString("hex")
 
+/* */
 // == REDUX
 // = Redux ActionTypes
 const SEPERATOR = "_"
@@ -18,8 +19,7 @@ const COUNTER_DECREMENT = PREFIX + "DECREMENT"
 const COUNTER_SELECT = PREFIX + "SELECT"
 const COUNTER_CREATE = PREFIX + "CREATE"
 const COUNTER_DELETE = PREFIX + "DELETE"
-
-const actionTypes = {
+const TYPES = {
   BASE,
   COUNTER_INCREMENT,
   COUNTER_DECREMENT,
@@ -27,9 +27,29 @@ const actionTypes = {
   COUNTER_CREATE,
   COUNTER_DELETE
 }
-const TYPES = typeValidator(actionTypes)
 
 // = Redux Actions
+function getCounterRecords() {
+  // === FETCH COUNTER
+  const counterRecords = (records) => ({
+    type: TYPES.COUNTERS_FETCH,
+    payload: { records },
+    meta: {},
+    error: false
+  })
+
+  return function thunk(dispatch) {
+    const allCounters = postgres.select().from('counters').timeout(1000)
+
+    allCounters.then(res => {
+      dispatch(counterRecords(res))
+    })
+
+    
+    return true
+  }
+}
+
 // updateCounterValue({ recordId, incr = true }: { recordId, incr: boolean }) {
 function updateCounterRecordValue({ recordId, incr = true } = {}) {
   // === UPDATE COUNTER
@@ -102,6 +122,13 @@ function deleteCounterRecord(recordId) {
   }
 }
 
+export const Actions = {
+  fetch: getCounterRecords,
+  select: selectCounterRecord,
+  updateValue: updateCounterRecordValue,
+  delete: deleteCounterRecord
+}
+
 function createCounterRecord(counterName = "", userSessionId = generateId()) {
   function newRecord(recordId, record) {
     // === CREATE COUNTER
@@ -135,14 +162,15 @@ const defaultState = {
   counter: defaultCounter,
   counters: {
     records: {},
-    meta: { recordsAmount: 1 }
+    meta: { recordsAmount: 0 }
   },
   lastUpdated: false,
   actions: []
 }
 defaultState.counters.records[defaultCounter.id] = defaultCounter
 
-export function PX_COUNTERS_REDUCER(state = defaultState, action) {
+// NOTE: preferred method is to use makeReducer(counterReducer) instead of export
+export function PX_COUNTERS_UI(state = defaultState, action) {
   // accrue dispatched sub actionNames in an array
   const pastTenseLastType = (str) => {
     const tense = "ED"
@@ -228,24 +256,24 @@ export function PX_COUNTERS_REDUCER(state = defaultState, action) {
       }
     }
 
-    // case TYPES.COUNTER_RENAME: {
-    //   // $FlowFixMe redux-fsa
-    //   const { id, name } = action.payload
+    case TYPES.COUNTER_RENAME: {
+      // $FlowFixMe redux-fsa
+      const { id, name } = action.payload
 
-    //   const counter = { ...state.counter }
-    //   counter.name = name
+      const counter = { ...state.counter }
+      counter.name = name
 
-    //   // optimistically update counter name in records
-    //   const counters = { ...state.counters }
-    //   counters.records[id].name = name
+      // optimistically update counter name in records
+      const counters = { ...state.counters }
+      counters.records[id].name = name
 
-    //   return {
-    //     ...state,
-    //     counter,
-    //     counters,
-    //     lastUpdated: new Date()
-    //   }
-    // }
+      return {
+        ...state,
+        counter,
+        counters,
+        lastUpdated: new Date()
+      }
+    }
 
     case TYPES.COUNTER_INCREMENT: {
       // optimisticly update value in redux counterList
@@ -285,13 +313,11 @@ export function PX_COUNTERS_REDUCER(state = defaultState, action) {
 }
 
 // add counter to redux store
-const counterReducerName = "PX_COUNTERS_THUNK"
+const counterReducerName = "PX_COUNTERS"
 const counterReducer = {}
-counterReducer[counterReducerName] = PX_COUNTERS_REDUCER
-console.log({
-  counterReducer
-})
-// makeReducer(counterReducer)
+counterReducer[counterReducerName] = PX_COUNTERS_UI
+
+
 
 /* */
 // == REACT
