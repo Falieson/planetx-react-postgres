@@ -22,7 +22,7 @@ export default function Navigation() {
       <li style={style.li}>
         <Link // eslint-disable-line jsx-a11y/anchor-has-content
           {...props}
-          activeStyle={{ fontWeight: 'bold' }}
+          // activeStyle={{ fontWeight: 'bold' }} // FIXME: always activated on '/'
           style={style.a}
         />
       </li>

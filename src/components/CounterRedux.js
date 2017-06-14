@@ -1,18 +1,12 @@
-/*  Counters | PX Ultimate React 2017
-  -TODO: recordList ID 's w/ delete Buttons
-*/
-
-
+/*  Counters | PX Ultimate React 2017 */
 import crypto from 'crypto'
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
-
-// this adds the reducer to the the store
-// import makeReducer from '../redux/makeReducer'
+import typeValidator from '../redux/typeValidator'  // this creates a proxy for actionTypes
+// import makeReducer from '../redux/makeReducer' // this adds the reducer to the the store
 const generateId = () => crypto.randomBytes(16).toString("hex")
 
-/* */
 // == REDUX
 // = Redux ActionTypes
 const SEPERATOR = "_"
@@ -24,7 +18,8 @@ const COUNTER_DECREMENT = PREFIX + "DECREMENT"
 const COUNTER_SELECT = PREFIX + "SELECT"
 const COUNTER_CREATE = PREFIX + "CREATE"
 const COUNTER_DELETE = PREFIX + "DELETE"
-const TYPES = {
+
+const actionTypes = {
   BASE,
   COUNTER_INCREMENT,
   COUNTER_DECREMENT,
@@ -32,6 +27,7 @@ const TYPES = {
   COUNTER_CREATE,
   COUNTER_DELETE
 }
+const TYPES = typeValidator(actionTypes)
 
 // = Redux Actions
 // updateCounterValue({ recordId, incr = true }: { recordId, incr: boolean }) {
@@ -232,24 +228,24 @@ export function PX_COUNTERS_UI(state = defaultState, action) {
       }
     }
 
-    case TYPES.COUNTER_RENAME: {
-      // $FlowFixMe redux-fsa
-      const { id, name } = action.payload
+    // case TYPES.COUNTER_RENAME: {
+    //   // $FlowFixMe redux-fsa
+    //   const { id, name } = action.payload
 
-      const counter = { ...state.counter }
-      counter.name = name
+    //   const counter = { ...state.counter }
+    //   counter.name = name
 
-      // optimistically update counter name in records
-      const counters = { ...state.counters }
-      counters.records[id].name = name
+    //   // optimistically update counter name in records
+    //   const counters = { ...state.counters }
+    //   counters.records[id].name = name
 
-      return {
-        ...state,
-        counter,
-        counters,
-        lastUpdated: new Date()
-      }
-    }
+    //   return {
+    //     ...state,
+    //     counter,
+    //     counters,
+    //     lastUpdated: new Date()
+    //   }
+    // }
 
     case TYPES.COUNTER_INCREMENT: {
       // optimisticly update value in redux counterList
